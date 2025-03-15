@@ -1,54 +1,47 @@
-# React + TypeScript + Vite
+# React Upload
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación web construida con React, TypeScript y Vite que permite realizar la carga de archivos de forma sencilla y eficiente.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para ejecutar este proyecto localmente, asegúrate de tener los siguientes programas instalados:
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (v14 o superior)
+- [npm](https://www.npmjs.com/) (gestor de paquetes de Node.js)
+- [Vite](https://vitejs.dev/) (para un entorno de desarrollo rápido y optimizado)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Además, debes ejecutar el backend ubicado en el siguiente enlace: [ImageUploadAPI](https://github.com/Jcss1462/ImageUploadAPI).
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Instalación
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clona este repositorio en tu computadora:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+   ```bash
+   git clone https://github.com/tu-usuario/react-upload.git
+
+2. Navega al directorio del proyecto:
+
+   ```bash
+   cd react-upload
+  
+3. Instala las dependencias necesarias:
+
+   ```bash
+   npm install
+
+5. Ejecutar el proyecto
+   
+Para correr la aplicación localmente, usa el siguiente comando:
+
+   ```bash
+  npm run dev
+
+Esto iniciará un servidor de desarrollo. La aplicación estará disponible en http://localhost:3000 por defecto.
+
+Scripts disponibles
+
+npm run dev: Inicia el servidor de desarrollo.
+npm run build: Crea una versión optimizada de la aplicación para producción.
+npm run preview: Previsualiza la versión de producción localmente.

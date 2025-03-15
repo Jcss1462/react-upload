@@ -2,6 +2,7 @@ import { useState } from "react";
 import { uploadImage } from "../shared/services/imageService";
 import { ImageDataDto } from "../shared/dtos/imageDataDto";
 import { useGlobalContext } from "../shared/contexts/GlobalContext";
+import { toast } from "react-toastify";
 
 export default function Upload() {
   const [imageData, setImageData] = useState<ImageDataDto>({
@@ -10,7 +11,6 @@ export default function Upload() {
     data: "",
   });
   const [file, setFile] = useState<File | null>(null);
-  const [message, setMessage] = useState<string>("");
   const [formErrors, setFormErrors] = useState<{ name: string; dorsal: string }>({
     name: "",
     dorsal: "",
@@ -20,7 +20,7 @@ export default function Upload() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     // Validar campos
     if (!imageData.name || imageData.dorsal.toString() === "" || !file) {
       setFormErrors({
@@ -29,14 +29,15 @@ export default function Upload() {
       });
       return;
     }
-  
+
     setIsLoading(true); // Activar el spinner antes de enviar la solicitud
-  
+
     // Llamamos al servicio para subir la imagen
     uploadImage(file, imageData.name, imageData.dorsal)
-      .then((result) => {
-        setMessage(result.message);
-  
+      .then(() => {
+        // Usamos toast.success para notificar éxito
+        toast.success("Imagen subida con éxito");
+
         // Limpiar el formulario si la carga fue exitosa
         setImageData({
           name: "",
@@ -47,7 +48,8 @@ export default function Upload() {
       })
       .catch((error) => {
         console.error("Error al subir la imagen:", error);
-        setMessage("Hubo un error al subir la imagen.");
+        // Usamos toast.error para mostrar el error
+        toast.error("Hubo un error al subir la imagen");
       })
       .finally(() => {
         setIsLoading(false); // Desactivar el spinner cuando la solicitud termine
@@ -115,14 +117,12 @@ export default function Upload() {
 
         <button
           type="submit"
-          disabled={!imageData.name || imageData.dorsal.toString()=="" || !file}
+          disabled={!imageData.name || imageData.dorsal.toString() === "" || !file}
           className="w-full py-3 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 disabled:bg-gray-400"
         >
           Subir
         </button>
       </form>
-
-      {message && <p className="mt-3 text-green-600 text-center">{message}</p>}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Spinner } from "../components/Spinner";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useGlobalContext } from "../contexts/GlobalContext";
+import { Toaster } from "../components/Toaster";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
 
@@ -12,6 +13,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-grow p-4">{children}</main>
           <Footer />
           {isLoading && <Spinner />}
+          <Toaster/>
         </div>
       );
 };

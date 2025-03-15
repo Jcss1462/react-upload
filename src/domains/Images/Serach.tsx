@@ -2,6 +2,7 @@ import { useState } from "react";
 import { searchImages } from "../shared/services/imageService";
 import { ImageData } from "../shared/models/imageDataModel";
 import { useGlobalContext } from "../shared/contexts/GlobalContext";
+import { toast } from "react-toastify";
 
 export default function Search() {
   const [name, setName] = useState<string>("");
@@ -12,16 +13,19 @@ export default function Search() {
 
   const handleSearch = async () => {
     setIsLoading(true); // Activar el spinner antes de iniciar la búsqueda
-
+  
     searchImages({ name, dorsal: dorsal ? Number(dorsal) : undefined })
       .then((data) => {
         setResults(data); // Actualizar los resultados cuando la búsqueda sea exitosa
+      })
+      .catch((error) => {
+        console.error("Error al realizar la búsqueda:", error);
+        toast.error("Hubo un error al realizar la búsqueda"); // Mostrar el mensaje de error
       })
       .finally(() => {
         setIsLoading(false); // Desactivar el spinner después de la búsqueda, independientemente de si fue exitosa o no
       });
   };
-
   return (
     <div className="p-8 max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Buscar Imágenes</h1>

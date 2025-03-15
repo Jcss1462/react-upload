@@ -1,15 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Upload from "./domains/Images/upload";
+import Upload from "./domains/Images/Upload";
 import Search from "./domains/Images/Serach";
+import MainLayout from "./domains/shared/layouts/MainLayout";
 
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Upload />} />
-        <Route path="/search" element={<Search />} />
-      </Routes>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Search />} />
+          <Route path="/upload" element={<Upload />} />
+        </Routes>
+      </MainLayout>
     </BrowserRouter>
   );
 }

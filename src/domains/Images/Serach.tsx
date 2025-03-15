@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchImages } from "../shared/services/imgaeService";
+import { searchImages } from "../shared/services/imageService";
 import { ImageData } from "../shared/models/imageDataModel";
 
 export default function Search() {

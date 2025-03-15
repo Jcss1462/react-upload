@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { uploadImage } from "../shared/services/imgaeService";
+import { uploadImage } from "../shared/services/imageService";
 import { ImageDataDto } from "../shared/dtos/imageDataDto";
 
 export default function Upload() {

@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { searchImages } from "../shared/services/imageService";
 import { ImageData } from "../shared/models/imageDataModel";
+import { useGlobalContext } from "../shared/contexts/GlobalContext";
 
 export default function Search() {
   const [name, setName] = useState<string>("");
   const [dorsal, setDorsal] = useState<string>("");
   const [results, setResults] = useState<ImageData[]>([]);
+  
+  const { setIsLoading } = useGlobalContext();
 
   const handleSearch = async () => {
-    const data = await searchImages({ name, dorsal: dorsal ? Number(dorsal) : undefined });
-    setResults(data);
+    setIsLoading(true); // Activar el spinner antes de iniciar la búsqueda
+  
+    searchImages({ name, dorsal: dorsal ? Number(dorsal) : undefined })
+      .then((data) => {
+        setResults(data); // Actualizar los resultados cuando la búsqueda sea exitosa
+      })
+      .finally(() => {
+        setIsLoading(false); // Desactivar el spinner después de la búsqueda, independientemente de si fue exitosa o no
+      });
   };
 
   return (

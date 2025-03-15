@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { uploadImage } from "../shared/services/imageService";
 import { ImageDataDto } from "../shared/dtos/imageDataDto";
+import { useGlobalContext } from "../shared/contexts/GlobalContext";
 
 export default function Upload() {
   const [imageData, setImageData] = useState<ImageDataDto>({
@@ -15,18 +16,22 @@ export default function Upload() {
     dorsal: "",
   });
 
+  const { setIsLoading } = useGlobalContext();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     // Validar campos
-    if (!imageData.name || imageData.dorsal === 0 || !file) {
+    if (!imageData.name || imageData.dorsal.toString()=="" || !file) {
       setFormErrors({
         name: !imageData.name ? "El nombre es requerido" : "",
-        dorsal: imageData.dorsal === 0 ? "El dorsal es requerido" : "",
+        dorsal: !imageData.dorsal  ? "El dorsal es requerido" : "",
       });
       return;
     }
-
+  
+    setIsLoading(true); // Activar el spinner antes de enviar la solicitud
+  
     // Llamamos al servicio para subir la imagen
     try {
       const result = await uploadImage(file, imageData.name, imageData.dorsal);
@@ -34,6 +39,8 @@ export default function Upload() {
     } catch (error) {
       console.error("Error al subir la imagen:", error);
       setMessage("Hubo un error al subir la imagen.");
+    } finally {
+      setIsLoading(false); // Desactivar el spinner cuando la solicitud termine
     }
   };
 
@@ -98,7 +105,7 @@ export default function Upload() {
 
         <button
           type="submit"
-          disabled={!imageData.name || !file}
+          disabled={!imageData.name || imageData.dorsal.toString()=="" || !file}
           className="w-full py-3 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 disabled:bg-gray-400"
         >
           Subir

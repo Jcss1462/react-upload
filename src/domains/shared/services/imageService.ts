@@ -25,8 +25,8 @@ export const uploadImage = async (file: File, name: string, dorsal: number): Pro
 export const searchImages = async (query: { name?: string; dorsal?: number }): Promise<ImageData[]> => {
     const url = new URL(`${API_URL}/search`);
     if (query.name) url.searchParams.append("name", query.name);
-    if (query.dorsal) url.searchParams.append("dorsal", query.dorsal.toString());
-
+    if (query.dorsal || query.dorsal==0) url.searchParams.append("dorsal", query.dorsal.toString());
+   
     const response = await fetch(url);
     return response.json();
 };

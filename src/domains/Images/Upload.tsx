@@ -18,14 +18,14 @@ export default function Upload() {
 
   const { setIsLoading } = useGlobalContext();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   
     // Validar campos
-    if (!imageData.name || imageData.dorsal.toString()=="" || !file) {
+    if (!imageData.name || imageData.dorsal.toString() === "" || !file) {
       setFormErrors({
         name: !imageData.name ? "El nombre es requerido" : "",
-        dorsal: !imageData.dorsal  ? "El dorsal es requerido" : "",
+        dorsal: !imageData.dorsal ? "El dorsal es requerido" : "",
       });
       return;
     }
@@ -33,15 +33,25 @@ export default function Upload() {
     setIsLoading(true); // Activar el spinner antes de enviar la solicitud
   
     // Llamamos al servicio para subir la imagen
-    try {
-      const result = await uploadImage(file, imageData.name, imageData.dorsal);
-      setMessage(result.message);
-    } catch (error) {
-      console.error("Error al subir la imagen:", error);
-      setMessage("Hubo un error al subir la imagen.");
-    } finally {
-      setIsLoading(false); // Desactivar el spinner cuando la solicitud termine
-    }
+    uploadImage(file, imageData.name, imageData.dorsal)
+      .then((result) => {
+        setMessage(result.message);
+  
+        // Limpiar el formulario si la carga fue exitosa
+        setImageData({
+          name: "",
+          dorsal: 0,
+          data: "",
+        });
+        setFile(null); // Limpiar el archivo seleccionado
+      })
+      .catch((error) => {
+        console.error("Error al subir la imagen:", error);
+        setMessage("Hubo un error al subir la imagen.");
+      })
+      .finally(() => {
+        setIsLoading(false); // Desactivar el spinner cuando la solicitud termine
+      });
   };
 
   // Funciones para manejar el cambio de los inputs

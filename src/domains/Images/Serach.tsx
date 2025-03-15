@@ -12,7 +12,7 @@ export default function Search() {
 
   const handleSearch = async () => {
     setIsLoading(true); // Activar el spinner antes de iniciar la búsqueda
-  
+
     searchImages({ name, dorsal: dorsal ? Number(dorsal) : undefined })
       .then((data) => {
         setResults(data); // Actualizar los resultados cuando la búsqueda sea exitosa
